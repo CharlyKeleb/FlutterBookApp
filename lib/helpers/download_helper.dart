@@ -30,7 +30,7 @@ class DownloadsDb {
 
   Future removeAllWithId(Map item) async {
     final db = ObjectDB(FileSystemStorage(await getPath()));
-    List val = await db.find({});
+    List val = await db.find(item);
     val.forEach((element) {
       db.remove(element);
     });
@@ -52,6 +52,11 @@ class DownloadsDb {
     db.cleanup();
     await db.close();
     return val;
+  }
+
+  clear() async {
+    final db = ObjectDB(FileSystemStorage(await getPath()));
+    db.remove({});
   }
 }
 

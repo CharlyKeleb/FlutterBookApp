@@ -76,7 +76,7 @@ class _DownloadsState extends State<Downloads> {
       itemCount: dls.length,
       itemBuilder: (BuildContext context, int index) {
         Map dl = dls[index];
-print('============> ${dl['id']}');
+        print('============> ${dl['id']}');
         return Dismissible(
           key: ObjectKey(uuid.v4()),
           direction: DismissDirection.endToStart,
@@ -84,7 +84,9 @@ print('============> ${dl['id']}');
           onDismissed: (d) => _deleteBook(dl, index),
           child: InkWell(
             onTap: () async {
+              await db.removeAllWithId({'id': dl['id']});
               String path = dl['path'];
+
               List locators = await BookLocatorDB().getLocator(dl['id']);
 
               EpubViewer.setConfig(

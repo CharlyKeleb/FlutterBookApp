@@ -92,7 +92,7 @@ class DetailsProvider extends ChangeNotifier {
   }
 
   addDownload(Map body) async {
-    // await dlDB.removeAllWithId({'id': entry!.id!.t.toString()});
+    await dlDB.removeAllWithId({'id': entry!.id!.t.toString()});
     await dlDB.add(body);
     checkDownload();
   }
