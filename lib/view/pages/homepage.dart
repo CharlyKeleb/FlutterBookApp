@@ -9,6 +9,7 @@ import 'package:flutter_book_app/models/category_model.dart';
 import 'package:flutter_book_app/utils/navigate.dart';
 import 'package:flutter_book_app/view/screens/book_details.dart';
 import 'package:flutter_book_app/view/screens/genre.dart';
+import 'package:flutter_book_app/view/screens/reading_list.dart';
 import 'package:flutter_book_app/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -37,15 +38,17 @@ class _HomePageState extends State<HomePage>
           appBar: AppBar(
             centerTitle: true,
             title: Text('Flutter Book App'),
-            // actions: [
-            //   GestureDetector(
-            //     onTap: () {},
-            //     child: Padding(
-            //       padding: EdgeInsets.all(10.0),
-            //       child: Icon(CupertinoIcons.search, size: 25.0),
-            //     ),
-            //   )
-            // ],
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigate.pushPage(context, ReadingList());
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(CupertinoIcons.bookmark_solid, size: 25.0),
+                ),
+              )
+            ],
           ),
           body: _buildBody(viewModel, context),
         );
@@ -70,147 +73,13 @@ Widget _buildBodyList(HomeProvider viewModel, BuildContext context) {
     onRefresh: () => viewModel.getFeeds(),
     child: ListView(
       children: <Widget>[
-        viewModel.currentlyReadingBook == null
-            ? _buildFeaturedBook(viewModel)
-            : _buildCurrentlyReadingSection(viewModel, context),
+        _buildFeaturedBook(viewModel),
         SizedBox(height: 5.0),
         _buildCategories(viewModel),
         SizedBox(height: 10.0),
         _buildRecentlyAdded(viewModel),
       ],
     ),
-  );
-}
-
-Widget _buildCurrentlyReadingSection(
-    HomeProvider viewModel, BuildContext context) {
-  return Column(
-    children: [
-      ListTile(
-        title: Text(
-          'Continue Reading',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Container(
-          child: Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BookDetails(),
-                    ),
-                  );
-                },
-                child: CustomCard(
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Container(
-                    height: 250.0,
-                    width: 150.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          viewModel.currentlyReadingBook['bookInfo']
-                              ['volumeInfo']['imageLinks']['smallThumbnail'],
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10.0),
-              Flexible(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      viewModel.currentlyReadingBook['bookInfo']['volumeInfo']
-                          ['title'],
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      viewModel.currentlyReadingBook['bookInfo']['volumeInfo']
-                          ['authors'],
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 12.0),
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      viewModel.currentlyReadingBook['bookInfo']['volumeInfo']
-                          ['publishedDate'],
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(height: 5.0),
-                    Row(
-                      children: [
-                        Container(
-                          height: 25.0,
-                          child: OutlinedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              side: MaterialStateProperty.all<BorderSide>(
-                                BorderSide(
-                                    color: Theme.of(context).accentColor),
-                              ),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Fiction',
-                                style: TextStyle(
-                                  fontSize: 10.0,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5.0),
-                    Container(
-                      height: 35.0,
-                      width: 120.0,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Theme.of(context).accentColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Center(
-                          child: Text('Read Now'),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
   );
 }
 

@@ -10,8 +10,6 @@ class HomeProvider with ChangeNotifier {
   CategoryModel top = CategoryModel();
   CategoryModel recent = CategoryModel();
   ApiRequestStatus apiRequestStatus = ApiRequestStatus.loading;
-  var currentlyReadingDB = CurrentlyReadingDB();
-  var currentlyReadingBook;
   var downloadDB = DownloadsDb();
 
   Api api = Api();
@@ -27,27 +25,6 @@ class HomeProvider with ChangeNotifier {
     } catch (e) {
       checkError(e);
     }
-  }
-
-  Future<void> getCurrentlyReadingBook() async {
-    List currentBook = await currentlyReadingDB.listAll();
-    if (currentBook.isNotEmpty) {
-      List result =
-          await downloadDB.add({'id': currentBook.first['currentlyReading']});
-      currentlyReadingBook = result.first;
-    }
-    notifyListeners();
-  }
-
-  Future<void> lastOpenedBook(var id) async {
-    List currentBook = await currentlyReadingDB.listAll();
-    if (currentBook.isNotEmpty) {
-      await currentlyReadingDB.remove({});
-      await currentlyReadingDB.add({'currentlyReading': id});
-    } else {
-      await currentlyReadingDB.add({'currentlyReading': id});
-    }
-    notifyListeners();
   }
 
   void checkError(e) {

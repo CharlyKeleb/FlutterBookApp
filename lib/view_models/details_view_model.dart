@@ -23,7 +23,6 @@ class DetailsProvider extends ChangeNotifier {
 
   var favDB = FavoriteDb();
   var dlDB = DownloadsDb();
-  var crDB = CurrentlyReadingDB();
   var currentlyReading;
 
   bool faved = false;
@@ -166,32 +165,6 @@ class DetailsProvider extends ChangeNotifier {
         Navigator.pop(context);
       }
     });
-  }
-
-  Future<void> lastOpenedBook(var id) async {
-    List currentItem = await crDB.listAll();
-    if (currentItem.isNotEmpty) {
-      await crDB.remove({});
-      await crDB.add({
-        'currentlyReading': id,
-      });
-    } else {
-      await crDB.add({
-        'currentlyReading': id,
-      });
-    }
-    await getCurrentlyReading();
-    notifyListeners();
-  }
-
-  Future<void> getCurrentlyReading() async {
-    List currentItem = await crDB.listAll();
-    if (currentItem.isNotEmpty) {
-      List result =
-      await dlDB.check({'id': currentItem.first['currentlyReading']});
-      currentlyReading = result.first;
-    }
-    notifyListeners();
   }
 
   void setLoading(value) {
