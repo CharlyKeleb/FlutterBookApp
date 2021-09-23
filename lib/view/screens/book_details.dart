@@ -267,7 +267,6 @@ class _BookDetailsState extends State<BookDetails> {
         // Save locator to your database
         await BookLocatorDB().update(json);
       });
-      // provider.lastOpenedBook(widget.entry!.id!.t.toString());
     }
   }
 

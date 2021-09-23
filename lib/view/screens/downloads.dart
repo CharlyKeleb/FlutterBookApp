@@ -84,7 +84,6 @@ class _DownloadsState extends State<Downloads> {
           onDismissed: (d) => _deleteBook(dl, index),
           child: InkWell(
             onTap: () async {
-              await db.removeAllWithId({'id': dl['id']});
               String path = dl['path'];
 
               List locators = await BookLocatorDB().getLocator(dl['id']);
