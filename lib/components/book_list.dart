@@ -103,7 +103,7 @@ class BookList extends StatelessWidget {
                         child: Text(
                           '${title!.replaceAll(r'\', '')}',
                           style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             // color: Theme.of(context).textTheme.title.color,
                           ),
@@ -122,7 +122,7 @@ class BookList extends StatelessWidget {
                         child: Text(
                           author!,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w800,
                             color: Theme.of(context).accentColor,
                           ),
@@ -130,7 +130,7 @@ class BookList extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 6,
                     ),
                     Text(
                       '${desc!.length < 100 ? desc : desc!.substring(0, 100)}...'
@@ -138,8 +138,9 @@ class BookList extends StatelessWidget {
                           .replaceAll(r'\r', '')
                           .replaceAll(r'\"', '"'),
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 12,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
                       height: 5,
@@ -160,5 +161,4 @@ class BookList extends StatelessWidget {
       ),
     );
   }
-
 }
