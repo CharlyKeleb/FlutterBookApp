@@ -18,7 +18,6 @@ class Constants {
   static Color darkBG = Color(0xff2B2B2B);
 
   static ThemeData lightTheme = ThemeData(
-    // textTheme: GoogleFonts.robotoMonoTextTheme(),
     backgroundColor: lightBG,
     primaryColor: lightPrimary,
     textSelectionTheme: TextSelectionThemeData(
@@ -43,15 +42,6 @@ class Constants {
   );
 
   static ThemeData darkTheme = ThemeData(
-    // textTheme: GoogleFonts.robotoMonoTextTheme().copyWith(
-    //   bodyText1: TextStyle(color: Colors.white),
-    //   bodyText2: TextStyle(color: Colors.white),
-    //   headline6: TextStyle(color: Colors.white),
-    //   headline1: TextStyle(color: Colors.white),
-    //   headline2: TextStyle(color: Colors.white),
-    //   headline3: TextStyle(color: Colors.white),
-    //   headline4: TextStyle(color: Colors.white),
-    // ),
     brightness: Brightness.dark,
     backgroundColor: darkBG,
     primaryColor: darkPrimary,
@@ -93,17 +83,12 @@ class ThemeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // _initPrefs()async{
-  //   if(_prefs == null)
-  //     _prefs = await SharedPreferences.getInstance();
-  // }
+  
   _loadfromPrefs()async{
-    // await _initPrefs();
-    _darkTheme = _prefs!.getBool(key);
+    _darkTheme = _prefs?.getBool(key);
     notifyListeners();
   }
   _saveToPrefs()async{
-    // await _initPrefs();
     _prefs!.setBool(key, _darkTheme!);
   }
 }
