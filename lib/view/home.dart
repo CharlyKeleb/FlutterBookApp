@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.house
+              Icons.home
             ),
             label: "Home",
           ),
